@@ -1,9 +1,7 @@
-import requests
 import pandas as pd
 from pulp import *
-
-from flask import Flask
-from flask import request
+from flask import Flask, request
+import json
 
 app = Flask(__name__)
 
@@ -171,9 +169,9 @@ def model_info():
     """
     return str(
         """
-        Expected JSON input: 
+        Expected JSON input:
         {
-        "grade" : NUMBER
+            "grade" : NUMBER
         }
         """
     )
@@ -187,11 +185,11 @@ def model_computation_main():
         # This gets the data field in the post request
         j = validate_json(request.data)
         # Return a JSON back out
-        return json.dumps({"result": optimize(j)})
+        return json.dumps({optimize(j)})
     except ValueError as ex:  # failed schema/values validation
         return json.dumps({ "Incorrect JSON format:\n": str(ex)}), HTTP_ERROR_CLIENT
     except Exception as ex:
-        return json.dumps({ "Server Error:\n": str(ex)}), HTTP_ERROR_SERVER
+        return json.dumps({ "Server Error:\n": str(ex),}), HTTP_ERROR_SERVER
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
