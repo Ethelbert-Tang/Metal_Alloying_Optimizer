@@ -7,6 +7,8 @@ import pandas as pd
 from pulp import *
 import PySimpleGUIWeb as sg
 
+
+# Using "static" data here for testing deployment
 data = {'Metal':['Al', 'Cu', 'HC_Cr', 'LC_Cr', 'SiCr', 'Ni', 'Mg', 'Nb', 'Mo', 'Si', 'Ti','V', 'NV', 'Mn', 'LC_Mn', 'MC_Mn', 'HC_Mn', 'SiMn'],
          'C':[0.0, 0.0, 80.0, 1.0, 10.0, 0.6, 0.0, 1.4, 1.0, 0.5, 1.5, 1.0, 60.0, 0.0, 7.0, 15.0, 80.0, 25.0],
          'Al':[997.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0, 3.3, 0.0, 5.0, 50.0, 20.0, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -58,7 +60,7 @@ layout = [
     [sg.Button('Calculate'), sg.Button('Clear'), sg.Button('Exit')]
 ]
 
-window = sg.Window('Steel Optimizer Input', layout, web_port=5000, web_start_browser=False) # opens a window for which you input a grade number
+window = sg.Window('Steel Optimizer Input', layout, web_port=5000, web_start_browser=False) # open browser and visit http://127.0.0.1:5000/ to access
 
 while True:
     event, values = window.read()
