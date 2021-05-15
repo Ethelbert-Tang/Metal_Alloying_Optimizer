@@ -143,6 +143,18 @@ for v in prob.variables():
 
 final_df = pd.DataFrame(list(zip(Adds, Qty)), columns=['Metal', 'Additions (Metric Tons)'])
     
+def generate_table(dataframe, max_rows=10):
+    return html.Table([
+        html.Thead(
+            html.Tr([html.Th(col) for col in dataframe.columns])
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+            ]) for i in range(min(len(dataframe), max_rows))
+        ])
+    ])
+
 app.layout = html.Div(children=[
     html.H1(children='Metal Calc'),
 
@@ -150,15 +162,7 @@ app.layout = html.Div(children=[
         Determining ideal additions for Steel
     '''),
     
-    dash_table.DataTable(
-        id='table',
-        style_cell={
-            'whiteSpace': 'auto',
-            'height': 'auto',
-        },
-        columns=[{"name":i, "id":i} for i in final_df.columns],
-        data=final_df.to_dict('records'),
-    )
+    generate_table(final_df)
 ])
 
 if __name__ == '__main__':
